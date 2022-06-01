@@ -1,0 +1,21 @@
+{% extends 'studentBase.html' %}
+
+{% block content %}
+    {% if subject|length == 0 %}
+    <h2>No Available Subject</h2>
+    {% else %}
+        <h1>Available Subjects</h1>
+        <table class="avaSubject">
+            <tr>
+                <th>Code</th>
+                <th>Subject</th>
+            </tr>
+            {% for s in subject %}
+            <tr>
+                <td><a href="{{ url_for(studentSubjectDetails, subjectCode = s['code']) }}">{{ s['code'] }}</a></td>
+                <td><a href="{{ url_for(studentSubjectDetails, subjectCode = s['code']) }}">{{ s['name'] }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
