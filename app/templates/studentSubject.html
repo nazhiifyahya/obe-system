@@ -12,8 +12,19 @@
             </tr>
             {% for s in subject %}
             <tr>
-                <td><a href="{{ url_for(studentSubjectDetails, subjectCode = s['code']) }}">{{ s['code'] }}</a></td>
-                <td><a href="{{ url_for(studentSubjectDetails, subjectCode = s['code']) }}">{{ s['name'] }}</a></td>
+                <td><a href="{{ url_for('studentSubjectDetails', subjectCode = s['code']) }}">{{ s['code'] }}</a></td>
+                <td><a href="{{ url_for('studentSubjectDetails', subjectCode = s['code']) }}">{{ s['name'] }}</a></td>
+                <td>
+                    {% if s['code'] not in enr %}
+                        <form action="{{ url_for('studentSubjectEnroll', subjectCode = s['code']) }}" method="POST">
+                            <button type="submit">Enroll</button>
+                        </form>
+                    {% else %}
+                        <form action="" method="POST">
+                            <button disabled="disabled">Enroll</button>
+                        </form>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>

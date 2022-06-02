@@ -1,0 +1,27 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+    {% if list|length == 0 %}
+    <h2>No Available Subject</h2>
+    {% else %}
+        <h1>Subjects</h1>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Subject</th>
+            </tr>
+            {% for l in list %}
+            <tr>
+                <td>{{ l.code }}</td>
+                <td>{{ l.name }}</td>
+                <td>
+                    <form action="{{ url_for('adminAssignCplSubject', cplCode = cplCode) }}" method="POST">
+                        <input type="hidden" name="subjectCode" value="{{ l.code }}">
+                        <button>Pick</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

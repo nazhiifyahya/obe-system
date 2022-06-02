@@ -1,0 +1,21 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+    {% if list|length == 0 %}
+    <h2>No Available Subject</h2>
+    {% else %}
+        <h1>Subjects</h1>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Subject</th>
+            </tr>
+            {% for l in list %}
+            <tr>
+                <td><a href="{{ url_for('educatorGradeStudent', subjectCode = l.code) }}">{{ l.code }}</a></td>
+                <td><a href="{{ url_for('educatorGradeStudent', subjectCode = l.code) }}">{{ l.name }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

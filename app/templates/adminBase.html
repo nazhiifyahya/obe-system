@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <main>
         <div class="sidebar">
             <header>
-                <a href="#">Student Dashboard</a>
-                <h4>Hello, Student</h4>
+                <a href="#">Admin Dashboard</a>
+                <h4>Hello, Admin</h4>
             </header>
             <ul class="menu">
-                <li class="menuItem"><a href="{{ url_for('studentSubject') }}">Subject</a></li>
-                <li class="menuItem"><a href="{{ url_for('studentGrades') }}">Grades</a></li>
+                <li class="menuItem"><a href="{{ url_for('adminCPL') }}">CPL</a></li>
+                <li class="menuItem"><a href="{{ url_for('adminSubject') }}">Subject</a></li>
+                <li class="menuItem"><a href="{{ url_for('adminAssignCpl') }}">Assign CPL</a></li>
+                <li class="menuItem"><a href="{{ url_for('adminAssignSubject') }}">Assign Educator</a></li>
                 <li class="menuItem"><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </div>

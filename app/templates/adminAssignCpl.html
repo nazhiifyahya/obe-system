@@ -1,0 +1,24 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+<h1>Capaian Pembelajaran Lulusan</h1>
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>CPL</th>
+            <th>Subject Code</th>
+        </tr>
+        {% for c in cpl %}
+        <tr>
+            <td>{{ c.code }}</td>
+            <td>{{ c.name }}</td>
+            <td>{{ c.subjectCode }}</td>
+            <td>
+                <form action="{{ url_for('adminAssignCplSubject', cplCode = c.code) }}">
+                    <button>Assign</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

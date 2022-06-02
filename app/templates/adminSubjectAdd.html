@@ -1,0 +1,14 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+<h1>Add Subject</h1><br>
+<form action="{{ url_for('adminSubjectAdd') }}" method="POST">
+    <label for="subjectCode">Code</label>
+    <input type="text" name="subjectCode" id="subjectCode">
+    <br>
+    <label for="subjectName">Name</label>
+    <input type="text" name="subjectName" id="subjectName">
+    <br>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

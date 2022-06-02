@@ -1,0 +1,17 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+<h1>Add CPMK</h1><br>
+<form action="{{ url_for('educatorSubjectCpmkAdd', subjectCode = subjectCode) }}" method="POST">
+    <label for="cpmkCode">Code</label>
+    <input type="text" name="cpmkCode" id="cpmkCode">
+    <br>
+    <label for="cpmkDesc">Description</label>
+    <textarea name="cpmkDesc" id="cpmkDesc" cols="60" rows="10"></textarea>
+    <br>
+    <label for="gradePercent">Subject Grade Percentage</label>
+    <input name="gradePercent" id="gradePercent">
+    <br>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

@@ -64,6 +64,15 @@ ul li:hover a{
     border-spacing: 10px;
 }
 
-.avaSubject a {
+table a {
     text-decoration: none;
+}
+
+table {
+    padding: 10px;
+    border-spacing: 10px;
+}
+
+.subjectDetail td {
+    font-size: 15px;
 }

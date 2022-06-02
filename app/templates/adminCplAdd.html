@@ -1,0 +1,14 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+<h1>Add CPL</h1><br>
+<form action="{{ url_for('adminAddCpl') }}" method="POST">
+    <label for="cplCode">Code</label>
+    <input type="text" name="cplCode" id="cplCode">
+    <br>
+    <label for="cplDesc">Description</label>
+    <textarea name="cplDesc" id="cplDesc" cols="60" rows="10"></textarea>
+    <br>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

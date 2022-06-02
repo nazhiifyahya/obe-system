@@ -1,0 +1,24 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+    {% if cpmk|length == 0 %}
+    <h2>No Available CPMK</h2>
+    {% else %}
+        <h1>CPMK</h1>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>CPMK</th>
+            </tr>
+            {% for c in cpmk %}
+            <tr>
+                <td><a href="">{{ c[0] }}</a></td>
+                <td><a href="">{{ c[2] }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <form action="{{ url_for('educatorSubjectCpmkAdd', subjectCode = subjectCode) }}">
+        <button>Add CPMK</button>
+    </form>
+{% endblock %}

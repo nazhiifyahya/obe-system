@@ -1,0 +1,18 @@
+{% extends 'studentBase.html' %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Subject Code</th>
+        <th>Subject</th>
+        <th>Grade</th>
+    </tr>
+    {% for sg in subjectGrade %}
+        <tr>
+            <td><a href="{{ url_for('studentGradesDetails', subjectCode = sg.subjectCode) }}">{{ sg.subjectCode }}</a></td>
+            <td><a href="{{ url_for('studentGradesDetails', subjectCode = sg.subjectCode) }}">{{ sg.subject.name }}</a></td>
+            <td>{{ sg.grade }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

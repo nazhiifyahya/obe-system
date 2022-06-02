@@ -1,0 +1,46 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+    <h1>Subjects</h1>
+    {% if list|length == 0 %}
+    <h2>No Available Subject</h2>
+    {% else %}
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Subject</th>
+            </tr>
+            {% for l in list %}
+            <tr>
+                <td>{{ l.code }}</td>
+                <td>{{ l.name }}</td>
+                <td>
+                    <form action="{{ url_for('adminAssignSubjectEducator', subjectCode = l.code) }}">
+                        <button>Assign</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <h1>Course</h1>
+    {% if courseList|length == 0 %}
+        <h2>No Course</h2>
+    {% else %}
+        <table>
+            <tr>
+                <th>NIP</th>
+                <th>Subject Code</th>
+                <th>Date</th>
+            </tr>
+            {% for c in courseList %}
+                <tr>
+                    <td>{{ c[0] }}</td>
+                    <td>{{ c[1] }}</td>
+                    <td>{{ c[2] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

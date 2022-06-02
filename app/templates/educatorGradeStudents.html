@@ -1,0 +1,21 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+    {% if students|length == 0 %}
+    <h2>No Students</h2>
+    {% else %}
+        <h1>Students</h1>
+        <table>
+            <tr>
+                <th>NIM</th>
+                <th>Name</th>
+            </tr>
+            {% for s in students %}
+            <tr>
+                <td><a href="">{{ s[0] }}</a></td>
+                <td><a href="">{{ s[1] }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

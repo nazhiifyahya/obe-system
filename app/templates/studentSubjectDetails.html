@@ -1,0 +1,23 @@
+{% extends 'studentBase.html' %}
+
+{% block content %}
+<h1>{{ subject.name }}</h1>
+<table class="subjectDetail">
+    <tr>
+        <th>CPMK</th>
+        <th>SubCPMK</th>
+        <th>Indikator Penilaian</th>
+    </tr>
+    {% for c in subject.cpmk %}
+        {% for s in c.subCpmk %}
+            {% for i in s.assessmentIndicator %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>{{ i.name }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+</table>
+{% endblock %}
