@@ -336,12 +336,8 @@ def educatorSubjectCpmkAdd(subjectCode):
 
 @app.route('/educator/<subjectCode>/<cpmkCode>/')
 def educatorSubjectCpmkSubCpmk(subjectCode, cpmkCode):
-    subject = Subject(subjectCode)
     cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
-    cpmk = ''
-    for cpmk in subject.cpmk:
-        if (cpmk.code == cpmkCodeParsed):
-            cpmk = cpmk
+    cpmk = Cpmk(subjectCode, cpmkCodeParsed)
     
     return render_template('educatorSubjectCpmkSubCpmk.html', cpmk = cpmk)
 
