@@ -2,13 +2,25 @@ from flask import g
 from db_conn import *
 
 class AssessmentIndicator:
-    def __init__(self, subjectCode, cpmkCode, subCpmkCode, code, name, gradePercent):
+    def __init__(self, subjectCode, cpmkCode, subCpmkCode, code):
         self.subjectCode = subjectCode
         self.cpmkCode = cpmkCode
         self.subCpmkCode = subCpmkCode
         self.code = code
-        self.name = name
-        self.gradePercent = gradePercent
+        self.name = ''
+        self.gradePercent = ''
+
+        self.setNameAndGradePercent()
+
+    def setNameAndGradePercent(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT indikatorPenilaianDesc, gradePercent FROM indikatorpenilaian WHERE subjectCode = "%s" AND cpmkCode = "%s" AND subCpmkCode = "%s" AND indikatorPenilaianCode = "%s"' % (self.subjectCode, self.cpmkCode, self.subCpmkCode, self.code))
+        result = cursor.fetchone()
+        conn.close()
+
+        self.name = result[0]
+        self.gradePercent = result[1]
     
 class SubCpmk:
     def __init__(self, subjectCode, cpmkCode, code, name, gradePercent):
@@ -18,44 +30,58 @@ class SubCpmk:
         self.name = name
         self.gradePercent = gradePercent
         self.assessmentIndicator = []
+        
         self.setAssessmentIndicator()
     
     def setAssessmentIndicator(self):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM indikatorpenilaian WHERE subjectCode = "%s" AND cpmkCode = "%s" AND subCpmkCode = "%s"' % (self.subjectCode, self.cpmkCode, self.code))
+        cursor.execute('SELECT indikatorPenilaianCode FROM indikatorpenilaian WHERE subjectCode = "%s" AND cpmkCode = "%s" AND subCpmkCode = "%s"' % (self.subjectCode, self.cpmkCode, self.code))
         result = cursor.fetchall()
         conn.close()
 
         for entry in result:
-            assessInd = AssessmentIndicator(self.subjectCode, self.cpmkCode, self.code, entry[0], entry[4], entry[5])
+            assessInd = AssessmentIndicator(self.subjectCode, self.cpmkCode, self.code, entry[0])
             self.assessmentIndicator.append(assessInd)
 
 class Cpmk:
-    def __init__(self, subjectCode, code, name, gradePercent):
+    def __init__(self, subjectCode, code):
         self.subjectCode = subjectCode
         self.code = code
-        self.name = name
-        self.gradePercent = gradePercent
+        self.name = ''
+        self.gradePercent = ''
         self.subCpmk = []
+        
         self.setSubCpmk()
+        self.setNameAndGradePercent()
     
     def setSubCpmk(self):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM subcpmk WHERE subjectCode = "%s" AND cpmkCode = "%s"' % (self.subjectCode, self.code))
+        cursor.execute('SELECT subCpmkCode, subCpmkDesc, gradePercent FROM subcpmk WHERE subjectCode = "%s" AND cpmkCode = "%s"' % (self.subjectCode, self.code))
         result = cursor.fetchall()
         conn.close()
 
         for entry in result:
-            subCpmk = SubCpmk(self.subjectCode, self.code, entry[0], entry[3], entry[4])
+            subCpmk = SubCpmk(self.subjectCode, self.code, entry[0], entry[1], entry[2])
             self.subCpmk.append(subCpmk)
+        
+    def setNameAndGradePercent(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT CPMKDesc, gradePercent FROM cpmk WHERE subjectCode = "%s" AND cpmkCode = "%s"' % (self.subjectCode, self.code))
+        result = cursor.fetchone()
+        conn.close()
+
+        self.name = result[0]
+        self.gradePercent = result[1]
 
 class Subject:
     def __init__(self, code):
         self.code = code
         self.name = ''
         self.cpmk = []
+        
         self.setName()
         self.setCpmk()
 
@@ -69,12 +95,12 @@ class Subject:
     def setCpmk(self):
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM cpmk WHERE subjectCode = "%s"' % (self.code,))
+        cursor.execute('SELECT cpmkCode FROM cpmk WHERE subjectCode = "%s"' % (self.code,))
         result = cursor.fetchall()
         conn.close()
 
         for entry in result:
-            cpmk = Cpmk(self.code, entry[0], entry[2], entry[3])
+            cpmk = Cpmk(self.code, entry[0])
             self.cpmk.append(cpmk)
 
 class AssessmentIndicatorGrade:
@@ -232,6 +258,11 @@ class SubjectGrade:
             finalExamGradePercent -= g.subjectGradePercent
         
         self.grade += finalExamGrade.grade*finalExamGradePercent/100
+    
+    def getCpmkGrade(self, cpmkCode):
+        for c in self.cpmkGrades:
+            if (c.code == cpmkCode):
+                return c
 
 class Enroll:
     def __init__(self, nim, year):

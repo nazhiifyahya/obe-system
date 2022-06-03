@@ -1,24 +1,24 @@
 {% extends 'educatorBase.html' %}
 
 {% block content %}
-    {% if cpmk|length == 0 %}
-    <h2>No Available CPMK</h2>
-    {% else %}
-        <h1>CPMK</h1>
-        <table>
+    <h1>{{ subject.code }}</h1>
+    <h2>{{ subject.name }}</h2>
+
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>CPMK</th>
+            <th>Subject Grade Percentage</th>
+        </tr>
+        {% for cpmk in subject.cpmk %}
             <tr>
-                <th>Code</th>
-                <th>CPMK</th>
+                <td><a href="{{ url_for('educatorSubjectCpmkSubCpmk', subjectCode = subject.code, cpmkCode = cpmk.code) }}">{{ cpmk.code }}</a></td>
+                <td><a href="{{ url_for('educatorSubjectCpmkSubCpmk', subjectCode = subject.code, cpmkCode = cpmk.code) }}">{{ cpmk.name }}</a></td>
+                <td>{{ cpmk.gradePercent }}</td>
             </tr>
-            {% for c in cpmk %}
-            <tr>
-                <td><a href="">{{ c[0] }}</a></td>
-                <td><a href="">{{ c[2] }}</a></td>
-            </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
-    <form action="{{ url_for('educatorSubjectCpmkAdd', subjectCode = subjectCode) }}">
-        <button>Add CPMK</button>
+        {% endfor %}
+    </table>
+    <form action="{{ url_for('educatorSubjectCpmkAdd', subjectCode = subject.code) }}" method="GET">
+        <button type="submit">Add CPMK</button>
     </form>
 {% endblock %}

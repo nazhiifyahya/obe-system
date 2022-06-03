@@ -1,6 +1,8 @@
+from http.cookies import _unquote
 from flask import Flask, render_template, request, session, redirect, url_for
 from db_conn import *
 from obj import *
+import urllib.parse
 
 app = Flask(__name__)
 app.secret_key = 'thisIsSecret'
@@ -119,6 +121,15 @@ def studentGrades():
 def studentGradesDetails(subjectCode):
     return render_template('studentGradesDetails.html', subjectGrade = SubjectGrade(subjectCode, '1953', '2022', '2022'))
 
+@app.route('/student/subject/<subjectCode>/<cpmkCode>')
+def studentGradesDetailsCpmk(subjectCode, cpmkCode):
+    url = request.url
+    urlSplit = url.split('/')
+    cpmkCodeUrl = urlSplit[4]
+    subjectGrade = SubjectGrade(subjectCode, '1953', '2022', '2022')
+    code = cpmkCodeUrl
+    cpmkGrade = subjectGrade.getCpmkGrade(code)
+    return render_template('studentGradesDetailsCpmk.html', cpmkGrade = cpmkGrade )
 
 @app.route('/admin')
 @app.route('/admin/CPL')
@@ -263,7 +274,7 @@ def adminAssignSubjectEducator(subjectCode):
         return redirect(url_for('adminAssignSubject'))
 
 @app.route('/educator')
-@app.route('/educator/subject')
+@app.route('/educator/subjects/')
 def educatorSubject():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -278,21 +289,11 @@ def educatorSubject():
     
     return render_template('educatorSubject.html', list = subjectList)
 
-@app.route('/educator/<subjectCode>/cpmk')
+@app.route('/educator/<subjectCode>/')
 def educatorSubjectCpmk(subjectCode):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM cpmk WHERE subjectCode = "%s"' % (subjectCode))
-    result = cursor.fetchall()
-    conn.close()
+    return render_template('educatorSubjectCpmk.html', subject = Subject(subjectCode))
 
-    cpmk = []
-    for entry in result:
-        cpmk.append(entry)
-    
-    return render_template('educatorSubjectCpmk.html', cpmk = cpmk, subjectCode = subjectCode)
-
-@app.route('/educator/<subjectCode>/cpmk/add', methods=['GET', 'POST'])
+@app.route('/educator/<subjectCode>/CPMK/add', methods=['GET', 'POST'])
 def educatorSubjectCpmkAdd(subjectCode):
     if (request.method == 'GET'):
         return render_template('educatorSubjectCpmkAdd.html', subjectCode = subjectCode)
@@ -304,6 +305,56 @@ def educatorSubjectCpmkAdd(subjectCode):
         conn.close()
 
         return redirect(url_for('educatorSubjectCpmk', subjectCode = subjectCode))
+
+@app.route('/educator/<subjectCode>/<cpmkCode>/')
+def educatorSubjectCpmkSubCpmk(subjectCode, cpmkCode):
+    subject = Subject(subjectCode)
+    cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+    cpmk = ''
+    for cpmk in subject.cpmk:
+        if (cpmk.code == cpmkCodeParsed):
+            cpmk = cpmk
+    
+    return render_template('educatorSubjectCpmkSubCpmk.html', cpmk = cpmk)
+
+@app.route('/educator/<subjectCode>/<cpmkCode>/SubCPMK/Add/', methods=['GET', 'POST'])
+def educatorSubjectCpmkSubCpmkAdd(subjectCode, cpmkCode):
+    if (request.method == 'GET'):
+        cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+        return render_template('educatorSubjectCpmkSubCpmkAdd.html', subjectCode = subjectCode, cpmkCode = cpmkCodeParsed)
+    else:
+        cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO subcpmk VALUES ("%s", "%s", "%s", "%s", "%s")' % (request.form['subCpmkCode'], cpmkCodeParsed, subjectCode, request.form['subCpmkDesc'], request.form['gradePercent']))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('educatorSubjectCpmkSubCpmk', subjectCode = subjectCode, cpmkCode = cpmkCodeParsed))
+
+@app.route('/educator/<subjectCode>/<cpmkCode>/<subCpmkCode>/')
+def educatorSubjectCpmkSubCpmkIndikator(subjectCode, cpmkCode, subCpmkCode):
+    cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+    cpmk = Cpmk(subjectCode, cpmkCodeParsed)
+    
+    for subCpmk in cpmk.subCpmk:
+        if (subCpmk.code == subCpmkCode):
+            return render_template('educatorSubjectCpmkSubCpmkIndikator.html', subCpmk = subCpmk)
+
+@app.route('/educator/<subjectCode>/<cpmkCode>/<subCpmkCode>/indikatorPenilaian/Add', methods=['GET', 'POST'])
+def educatorSubjectCpmkSubCpmkIndikatorAdd(subjectCode, cpmkCode, subCpmkCode):
+    if (request.method == 'GET'):
+        cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+        return render_template('educatorSubjectCpmkSubCpmkIndikatorAdd.html', subjectCode = subjectCode, cpmkCode = cpmkCodeParsed, subCpmkCode = subCpmkCode)
+    else:
+        cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO indikatorpenilaian VALUES ("%s", "%s", "%s", "%s", "%s")' % (request.form['indikatorCode'], subCpmkCode, cpmkCodeParsed, subjectCode, request.form['indikatorDesc'], request.form['gradePercent']))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('educatorSubjectCpmkSubCpmkIndikator', subjectCode = subjectCode, cpmkCode = cpmkCodeParsed, subCpmkCode = subCpmkCode))
 
 @app.route('/educator/grade')
 def educatorGrade():

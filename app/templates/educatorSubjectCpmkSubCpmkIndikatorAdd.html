@@ -1,0 +1,17 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+<h1>Add Indikator Penilaian</h1><br>
+<form action="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorAdd', subjectCode = subjectCode, cpmkCode = cpmkCode, subCpmkCode = subCpmkCode) }}" method="POST">
+    <label for="indikatorCode">Code</label>
+    <input type="text" name="indikatorCode" id="indikatorCode">
+    <br>
+    <label for="indikatorDesc">Description</label>
+    <textarea name="indikatorDesc" id="indikatorDesc" cols="60" rows="10"></textarea>
+    <br>
+    <label for="gradePercent">SubCPMK Grade Percentage</label>
+    <input name="gradePercent" id="gradePercent">
+    <br>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

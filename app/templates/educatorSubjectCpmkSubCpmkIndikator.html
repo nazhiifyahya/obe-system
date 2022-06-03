@@ -1,0 +1,27 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+    {% if subCpmk.assessmentIndicator|length == 0 %}
+        <h1>No Idikator Penilaian</h1>
+    {% else %}
+        <h1>{{ subCpmk.code }}</h1>
+        <h2>{{ subCpmk.name }}</h2>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Sub CPMK</th>
+                <th>CPMK Grade Percentage</th>
+            </tr>
+            {% for ind in subCpmk.assessmentIndicator %}
+                <tr>
+                    <td><a href="">{{ ind.code }}</a></td>
+                    <td><a href="">{{ ind.name }}</a></td>
+                    <td>{{ ind.gradePercent }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <form action="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorAdd', subjectCode = subCpmk.subjectCode, cpmkCode = subCpmk.cpmkCode, subCpmkCode = subCpmk.code) }}" method="GET">
+            <button type="submit">Add Indikator Penilaian</button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'educatorBase.html' %}
+
+{% block content %}
+    {% if cpmk.subCpmk|length == 0 %}
+        <h1>No Sub CPMK</h1>
+    {% else %}
+        <h1>{{ cpmk.code }}</h1>
+        <h2>{{ cpmk.name }}</h2>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Sub CPMK</th>
+                <th>CPMK Grade Percentage</th>
+            </tr>
+            {% for subCpmk in cpmk.subCpmk %}
+                <tr>
+                    <td><a href="{{ url_for('educatorSubjectCpmkSubCpmkIndikator', subjectCode = subCpmk.subjectCode, cpmkCode = subCpmk.cpmkCode, subCpmkCode = subCpmk.code) }}">{{ subCpmk.code }}</a></td>
+                    <td><a href="{{ url_for('educatorSubjectCpmkSubCpmkIndikator', subjectCode = subCpmk.subjectCode, cpmkCode = subCpmk.cpmkCode, subCpmkCode = subCpmk.code) }}">{{ subCpmk.name }}</a></td>
+                    <td>{{ subCpmk.gradePercent }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <form action="{{ url_for('educatorSubjectCpmkSubCpmkAdd', subjectCode = cpmk.subjectCode, cpmkCode = cpmk.code) }}" method="GET">
+            <button type="submit">Add SubCPMK</button>
+        </form>
+    {% endif %}
+{% endblock %}
