@@ -187,6 +187,34 @@ def adminSubjectAdd():
 
         return redirect(url_for('adminSubject'))
 
+@app.route('/admin/educators/')
+def adminEducator():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM tenagapendidik INNER JOIN course ON tenagapendidik.NIP = course.NIP WHERE tenagapendidik.isDosen = 1')
+    result = cursor.fetchall()
+    conn.close()
+
+    educatorList = []
+    for entry in result:
+        educatorList.append(entry)
+    
+    return render_template('adminEducator.html', list = educatorList)
+
+@app.route('/admin/students/')
+def adminStudents():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM mahasiswa')
+    result = cursor.fetchall()
+    conn.close()
+
+    studentList = []
+    for entry in result:
+        studentList.append(entry)
+    
+    return render_template('adminStudent.html', list = studentList)
+
 @app.route('/admin/assign/cpl')
 def adminAssignCpl():
     conn = get_db_connection()
@@ -350,7 +378,7 @@ def educatorSubjectCpmkSubCpmkIndikatorAdd(subjectCode, cpmkCode, subCpmkCode):
         cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO indikatorpenilaian VALUES ("%s", "%s", "%s", "%s", "%s")' % (request.form['indikatorCode'], subCpmkCode, cpmkCodeParsed, subjectCode, request.form['indikatorDesc'], request.form['gradePercent']))
+        cursor.execute('INSERT INTO indikatorpenilaian VALUES ("%s", "%s", "%s", "%s", "%s", "%s")' % (request.form['indikatorCode'], subCpmkCode, cpmkCodeParsed, subjectCode, request.form['indikatorDesc'], request.form['gradePercent']))
         conn.commit()
         conn.close()
 

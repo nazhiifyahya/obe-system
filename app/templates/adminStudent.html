@@ -1,0 +1,25 @@
+{% extends 'adminBase.html' %}
+
+{% block content %}
+    {% if list|length == 0 %}
+    <h2>No Student</h2>
+    {% else %}
+        <h1>Students</h1>
+        <table>
+            <tr>
+                <th>NIM</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Password</th>
+            </tr>
+            {% for l in list %}
+            <tr>
+                <td>{{ l[0] }}</td>
+                <td>{{ l[1] }}</td>
+                <td>{{ l[2] }}</td>
+                <td>{{ l[3] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

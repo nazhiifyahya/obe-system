@@ -14,14 +14,14 @@
             </tr>
             {% for ind in subCpmk.assessmentIndicator %}
                 <tr>
-                    <td><a href="">{{ ind.code }}</a></td>
-                    <td><a href="">{{ ind.name }}</a></td>
+                    <td>{{ ind.code }}</td>
+                    <td>{{ ind.name }}</td>
                     <td>{{ ind.gradePercent }}</td>
                 </tr>
             {% endfor %}
         </table>
-        <form action="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorAdd', subjectCode = subCpmk.subjectCode, cpmkCode = subCpmk.cpmkCode, subCpmkCode = subCpmk.code) }}" method="GET">
-            <button type="submit">Add Indikator Penilaian</button>
-        </form>
     {% endif %}
+    <form action="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorAdd', subjectCode = subCpmk.subjectCode, cpmkCode = subCpmk.cpmkCode, subCpmkCode = subCpmk.code) }}" method="GET">
+        <button type="submit">Add Indikator Penilaian</button>
+    </form>
 {% endblock %}

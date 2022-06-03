@@ -20,8 +20,8 @@
                 </tr>
             {% endfor %}
         </table>
-        <form action="{{ url_for('educatorSubjectCpmkSubCpmkAdd', subjectCode = cpmk.subjectCode, cpmkCode = cpmk.code) }}" method="GET">
-            <button type="submit">Add SubCPMK</button>
-        </form>
     {% endif %}
+    <form action="{{ url_for('educatorSubjectCpmkSubCpmkAdd', subjectCode = cpmk.subjectCode, cpmkCode = cpmk.code) }}" method="GET">
+        <button type="submit">Add SubCPMK</button>
+    </form>
 {% endblock %}
