@@ -1,0 +1,25 @@
+{% extends 'studentBase.html' %}
+
+{% block content %}
+<h1>{{ subjectGrade.subject.name }}</h1>
+<h3>Overall Grade = {{ subjectGrade.grade }}</h3>
+
+<table>
+    <tr>
+        <th>Code</th>
+        <th>CPMK</th>
+        <th>Grade</th>
+    </tr>
+    {% for cg in subjectGrade.cpmkGrades %}
+        <tr>
+            <td><a href="{{ url_for('studentGradesDetailsCpmk', subjectCode = subjectGrade.subject.code, cpmkCode = cg.cpmk.code) }}">{{ cg.cpmk.code }}</a></td>
+            <td><a href="{{ url_for('studentGradesDetailsCpmk', subjectCode = subjectGrade.subject.code, cpmkCode = cg.cpmk.code) }}">{{ cg.cpmk.name }}</a></td>
+            <td>{{ cg.grade }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<br>
+<br>
+<h3>Final Exam Grade: {{ finalExamGrade.grade }}</h3>
+
+{% endblock %}

@@ -9,11 +9,18 @@
         <th>Indikator Penilaian</th>
     </tr>
     {% for c in subject.cpmk %}
+    <tr>
+        <td>{{ c.name }}</td>
+    </tr>
         {% for s in c.subCpmk %}
+            <tr>
+                <td></td>
+                <td>{{ s.name }}</td>
+            </tr>
             {% for i in s.assessmentIndicator %}
                 <tr>
-                    <td>{{ c.name }}</td>
-                    <td>{{ s.name }}</td>
+                    <td></td>
+                    <td></td>
                     <td>{{ i.name }}</td>
                 </tr>
             {% endfor %}

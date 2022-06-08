@@ -1,6 +1,7 @@
 {% extends 'studentBase.html' %}
 
 {% block content %}
+<h1>Subject Grades</h1>
 <table>
     <tr>
         <th>Subject Code</th>
@@ -9,8 +10,8 @@
     </tr>
     {% for sg in subjectGrade %}
         <tr>
-            <td><a href="{{ url_for('studentGradesDetails', subjectCode = sg.subjectCode) }}">{{ sg.subjectCode }}</a></td>
-            <td><a href="{{ url_for('studentGradesDetails', subjectCode = sg.subjectCode) }}">{{ sg.subject.name }}</a></td>
+            <td><a href="{{ url_for('studentGradesDetails', subjectCode = sg.subject.code) }}">{{ sg.subject.code }}</a></td>
+            <td><a href="{{ url_for('studentGradesDetails', subjectCode = sg.subject.code) }}">{{ sg.subject.name }}</a></td>
             <td>{{ sg.grade }}</td>
         </tr>
     {% endfor %}

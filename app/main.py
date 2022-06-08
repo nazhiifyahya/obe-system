@@ -119,17 +119,21 @@ def studentGrades():
 
 @app.route('/student/grades/<subjectCode>')
 def studentGradesDetails(subjectCode):
-    return render_template('studentGradesDetails.html', subjectGrade = SubjectGrade(subjectCode, '1953', '2022', '2022'))
-
-@app.route('/student/subject/<subjectCode>/<cpmkCode>')
-def studentGradesDetailsCpmk(subjectCode, cpmkCode):
-    url = request.url
-    urlSplit = url.split('/')
-    cpmkCodeUrl = urlSplit[4]
     subjectGrade = SubjectGrade(subjectCode, '1953', '2022', '2022')
-    code = cpmkCodeUrl
-    cpmkGrade = subjectGrade.getCpmkGrade(code)
+    finalExamGrade = FinalExamGrade(subjectCode, '1953', '2022', '2022')
+    return render_template('studentGradesDetails.html', subjectGrade = subjectGrade, finalExamGrade = finalExamGrade)
+
+@app.route('/student/grades/<subjectCode>/<cpmkCode>')
+def studentGradesDetailsCpmk(subjectCode, cpmkCode):
+    cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+    cpmkGrade = CpmkGrade(subjectCode, cpmkCodeParsed, '1953', '2022', '2022')
     return render_template('studentGradesDetailsCpmk.html', cpmkGrade = cpmkGrade )
+
+@app.route('/student/grades/<subjectCode>/<cpmkCode>/<subCpmkCode>')
+def studentGradesDetailsCpmkSubCpmk(subjectCode, cpmkCode, subCpmkCode):
+    cpmkCodeParsed = urllib.parse.unquote(cpmkCode)
+    subCpmkGrade = SubCpmkGrade(subjectCode, cpmkCodeParsed, subCpmkCode, '1953', '2022', '2022')
+    return render_template('studentGradesDetailsCpmkSubCpmk.html', subCpmkGrade = subCpmkGrade )
 
 @app.route('/admin')
 @app.route('/admin/CPL')

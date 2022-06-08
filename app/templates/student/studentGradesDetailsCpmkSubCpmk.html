@@ -1,0 +1,23 @@
+{% extends 'studentBase.html' %}
+
+{% block content %}
+<h1>{{ subCpmkGrade.subCpmk.code }}</h1>
+<h2>{{ subCpmkGrade.subCpmk.name }}</h2>
+<h3>Overall Grade = {{ subCpmkGrade.grade }}</h3>
+
+<table>
+    <tr>
+        <th>Code</th>
+        <th>Indikator Penilaian</th>
+        <th>Grade</th>
+    </tr>
+    {% for ig in subCpmkGrade.assessmentIndicatorGrade %}
+        <tr>
+            <td>{{ ig.assessmentIndicator.code }}</td>
+            <td>{{ ig.assessmentIndicator.name }}</td>
+            <td>{{ ig.grade }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
