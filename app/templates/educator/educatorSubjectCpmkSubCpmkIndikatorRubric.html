@@ -1,0 +1,27 @@
+{% extends 'educator/educatorBase.html' %}
+
+{% block content %}
+    {% if list|length == 0 %}
+        <h1>No Indikator Penilaian</h1>
+        <form action="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorRubric', subjectCode = indikator.subjectCode, cpmkCode = indikator.cpmkCode, subCpmkCode = indikator.subCpmkCode, indikatorPenilaianCode = indikator.code) }}" method="POST">
+            <label for="model">Enter Assignment Model</label>
+            <input type="text" name="model" id="model">
+            <button type="submit">Save</button>
+        </form>
+    {% else %}
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Criteria</th>
+                <th>Grade Percentage</th>
+            </tr>
+            {% for r in rub %}
+                <tr>
+                    <td>{{ r[1] }}</td>
+                    <td>{{ r[2] }}</td>
+                    <td>{{ r[3] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

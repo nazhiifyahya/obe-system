@@ -6,6 +6,53 @@
     list-style: none;
 }
 
+.loginBody {
+    background: url('./login-background.webp') no-repeat;
+    background-size: cover;
+}
+
+.loginForm {
+    width: 350px;
+    top: 45%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    color: #042331;
+}
+
+.loginForm h1 {
+    font-size: 35px;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 40px 0;
+}
+
+.loginForm label {
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+.loginForm input {
+    font-size: 16px;
+    width: 100%;
+    padding: 15px 10px;
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+}
+
+.loginForm button {
+    font-size: 18px;
+    background-color: #042331;
+    color: white;
+    font-weight: bold;
+    margin: 20px 0;
+    padding: 10px 15px;
+    width: 50%;
+    border-radius: 5px;
+    border: 0;
+}
+
 main {
     display: block;
 }
@@ -41,7 +88,7 @@ main {
     display: block;
     width: 100%;
     text-decoration: none;
-    line-height: 65px;
+    line-height: 50px;
     font-size: 18px;
     padding-left: 40px;
     box-sizing: border-box;

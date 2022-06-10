@@ -1,4 +1,4 @@
-{% extends 'adminBase.html' %}
+{% extends 'admin/adminBase.html' %}
 
 {% block content %}
     <h1>Subjects</h1>
@@ -22,5 +22,23 @@
             </tr>
             {% endfor %}
         </table>
+    {% endif %}
+    <h1>Course</h1>
+    {% if list|length == 0 %}
+    <h2>No Course</h2>
+    {% else %}
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>Lecturer</th>
+        </tr>
+        
+        {% for cl in courseList %}
+        <tr>
+            <td>{{ cl[1] }}</td>
+            <td>{{ cl[0] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
     {% endif %}
 {% endblock %}

@@ -2,19 +2,17 @@
 
 {% block content %}
     {% if list|length == 0 %}
-    <h2>No Educator</h2>
+    <h2>No Assignments Rubric</h2>
     {% else %}
-        <h1>Educator</h1>
+        <h1>Assignment Rubric</h1>
         <table>
             <tr>
-                <th>NIP</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>No</th>
+                <th>Criteria</th>
+                <th>Grade Percentage</th>
             </tr>
             {% for l in list %}
             <tr>
-                <td>{{ l[0] }}</td>
                 <td>{{ l[1] }}</td>
                 <td>{{ l[2] }}</td>
                 <td>{{ l[3] }}</td>

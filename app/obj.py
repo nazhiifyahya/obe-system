@@ -305,3 +305,20 @@ class Cpl:
         cursor.execute('SELECT subjectCode FROM cpl WHERE cplCode = "%s"' % (self.code,))
         self.subjectCode = cursor.fetchone()[0]
         conn.close()
+
+class AssignmentRubric:
+    def __init__(self, assignmentModelCode):
+        self.assignmentModelCode = assignmentModelCode
+
+    def getCriteria(self):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM assignmentrubric WHERE assignmentModelCode = "%s"' % (self.assignmentModelCode,))
+        result = cursor.fetchall()
+        conn.close()
+        return result
+
+class AssignmentModel:
+    def __init__(self, code):
+        self.code = code
+        self.assignmentRubric = AssignmentRubric(code)

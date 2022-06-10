@@ -1,0 +1,24 @@
+{% extends 'admin/adminBase.html' %}
+
+{% block content %}
+    {% if list|length == 0 %}
+    <h2>No Assignments Model</h2>
+    {% else %}
+        <h1>Assignment Models</h1>
+        <table>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+            </tr>
+            {% for l in list %}
+            <tr>
+                <td><a href="{{ url_for('adminAssignmentsModelRubric', assignmentModelCode = l[0]) }}">{{ l[0] }}</a></td>
+                <td><a href="{{ url_for('adminAssignmentsModelRubric', assignmentModelCode = l[0]) }}">{{ l[1] }}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    <form action="{{ url_for('adminAssignmentsModelAdd') }}">
+        <button type="submit">Add Assignment Model</button>
+    </form>
+{% endblock %}

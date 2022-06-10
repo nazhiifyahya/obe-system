@@ -1,0 +1,65 @@
+{% extends 'admin/adminBase.html' %}
+
+{% block content %}
+<h1>Add Assignment Model</h1><br>
+<form action="{{ url_for('adminAssignmentsModelAdd') }}" method="POST">
+    <label for="modelCode">Code</label>
+    <input type="text" name="modelCode" id="modelCode">
+    <br>
+    <label for="modelName">Name</label>
+    <input type="text" name="modelName" id="modelName">
+    <br><br>
+
+    <h1>Add Assignment Rubric</h1><br>
+    <label for="code1">Code</label>
+    <input type="text" name="code1" id="code1">
+    <br>
+    <label for="desc1">Description</label>
+    <textarea name="desc1" id="desc1" cols="60" rows="10"></textarea>
+    <br>
+    <label for="g1">Grade Percentage</label>
+    <input type="text" name="g1" id="g1">
+    <br><br>
+
+    <label for="code2">Code</label>
+    <input type="text" name="code2" id="code2">
+    <br>
+    <label for="desc2">Description</label>
+    <textarea name="desc2" id="desc2" cols="60" rows="10"></textarea>
+    <br>
+    <label for="g2">Grade Percentage</label>
+    <input type="text" name="g2" id="g2">
+    <br><br>
+
+    <label for="code3">Code</label>
+    <input type="text" name="code3" id="code3">
+    <br>
+    <label for="desc3">Description</label>
+    <textarea name="desc3" id="desc3" cols="60" rows="10"></textarea>
+    <br>
+    <label for="g3">Grade Percentage</label>
+    <input type="text" name="g3" id="g3">
+    <br><br>
+
+    <label for="code4">Code</label>
+    <input type="text" name="code4" id="code4">
+    <br>
+    <label for="desc4">Description</label>
+    <textarea name="desc4" id="desc4" cols="60" rows="10"></textarea>
+    <br>
+    <label for="g4">Grade Percentage</label>
+    <input type="text" name="g4" id="g4">
+    <br><br>
+
+    <label for="code5">Code</label>
+    <input type="text" name="code5" id="code5">
+    <br>
+    <label for="desc5">Description</label>
+    <textarea name="desc5" id="desc5" cols="60" rows="10"></textarea>
+    <br>
+    <label for="g5">Grade Percentage</label>
+    <input type="text" name="g5" id="g5">
+    <br>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

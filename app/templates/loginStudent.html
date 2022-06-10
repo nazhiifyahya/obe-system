@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Student</title>
-</head>
-<body>
-    <form action="{{ url_for('loginStudent') }}" method="POST">
-        <label for="username">Username: </label>
-        <input type="text" name="username" id="username">
-        <br>
-        <label for="password">Password: </label>
-        <input type="password" name="password" id="password">
-        <br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+{% extends 'login.html' %}
+
+{% block title %}Login Student{% endblock %}
+
+{% block login %}
+<h1>Login Student</h1>
+<form action="{{ url_for('loginStudent') }}" method="POST">
+    <label for="username">Username: </label>
+    <input type="text" name="username" id="username">
+    <br>
+    <label for="password">Password: </label>
+    <input type="password" name="password" id="password">
+    <br>
+    <button type="submit">Login</button>
+</form>
+{% endblock %}

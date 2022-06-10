@@ -1,4 +1,4 @@
-{% extends 'educatorBase.html' %}
+{% extends 'educator/educatorBase.html' %}
 
 {% block content %}
     {% if subCpmk.assessmentIndicator|length == 0 %}
@@ -14,8 +14,8 @@
             </tr>
             {% for ind in subCpmk.assessmentIndicator %}
                 <tr>
-                    <td>{{ ind.code }}</td>
-                    <td>{{ ind.name }}</td>
+                    <td><a href="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorRubric', subjectCode = ind.subjectCode, cpmkCode = ind.cpmkCode, subCpmkCode = ind.subCpmkCode, indikatorPenilaianCode = ind.code) }}">{{ ind.code }}</a></td>
+                    <td><a href="{{ url_for('educatorSubjectCpmkSubCpmkIndikatorRubric', subjectCode = ind.subjectCode, cpmkCode = ind.cpmkCode, subCpmkCode = ind.subCpmkCode, indikatorPenilaianCode = ind.code) }}">{{ ind.name }}</a></td>
                     <td>{{ ind.gradePercent }}</td>
                 </tr>
             {% endfor %}
